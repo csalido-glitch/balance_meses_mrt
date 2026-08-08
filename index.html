@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
+<html lang="es"><head>
 <meta charset="UTF-8">
 <title>Balance Metalúrgico MRT — UM Cieneguita</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
 <style>
 :root{
   --gold:#B8912A;
@@ -165,7 +164,7 @@ table.datatbl tr:nth-child(even){background:#fafafa;}
 <div class="header-banner">
   <div class="titlebox">
     <h1>BALANCE METALÚRGICO — MINERA RÍO TINTO</h1>
-    <div class="subtitle">UM Cieneguita &middot; Dashboard mensual (Molienda / Precipitación-Doré / Fletes / Ppto vs Real)</div>
+    <div class="subtitle">UM Cieneguita · Dashboard mensual (Molienda / Precipitación-Doré / Fletes / Ppto vs Real)</div>
   </div>
 </div>
 
@@ -184,10 +183,10 @@ table.datatbl tr:nth-child(even){background:#fafafa;}
   </div>
   <div class="locked-banner" id="lockedBanner" style="display:none">🔒 Copia archivada — solo lectura, no admite nuevos datos.</div>
 
-  <div class="sticky-head" id="stickyHead">
-    <p class="last-updated" id="lastUpdated"></p>
+  <div class="sticky-head stuck" id="stickyHead">
+    <p class="last-updated" id="lastUpdated">Datos actualizados hasta: Julio 2026</p>
     <div class="toolbar">
-      <div class="chips" id="chips"></div>
+      <div class="chips" id="chips"><div class="chip" style="background: rgb(237, 125, 49);">julio 2025<span class="x"> ✕</span></div><div class="chip" style="background: rgb(154, 154, 154);">agosto 2025<span class="x"> ✕</span></div><div class="chip" style="background: rgb(78, 167, 46);">septiembre 2025<span class="x"> ✕</span></div><div class="chip" style="background: rgb(184, 145, 42);">octubre 2025<span class="x"> ✕</span></div><div class="chip" style="background: rgb(160, 43, 147);">noviembre 2025<span class="x"> ✕</span></div><div class="chip" style="background: rgb(21, 96, 130);">diciembre 2025<span class="x"> ✕</span></div><div class="chip" style="background: rgb(232, 163, 61);">enero 2026<span class="x"> ✕</span></div><div class="chip" style="background: rgb(112, 173, 71);">febrero 2026<span class="x"> ✕</span></div><div class="chip" style="background: rgb(38, 68, 120);">marzo 2026<span class="x"> ✕</span></div><div class="chip" style="background: rgb(132, 60, 12);">abril 2026<span class="x"> ✕</span></div><div class="chip" style="background: rgb(99, 99, 99);">mayo 2026<span class="x"> ✕</span></div><div class="chip" style="background: rgb(255, 192, 0);">junio 2026<span class="x"> ✕</span></div><div class="chip" style="background: rgb(91, 155, 213);">julio 2026<span class="x"> ✕</span></div></div>
       <div class="btns">
         <button class="action" id="btnExport">💾 Descargar versión completa para enviar</button>
         <button class="action secondary" id="btnReset">🔄 Restablecer</button>
@@ -195,29 +194,214 @@ table.datatbl tr:nth-child(even){background:#fafafa;}
     </div>
 
     <div class="tabs">
-      <div class="tab active" data-tab="resumen">Resumen</div>
+      <div class="tab" data-tab="resumen">Resumen</div>
       <div class="tab" data-tab="pptoreal">Ppto vs Real</div>
       <div class="tab" data-tab="produccion">Producción</div>
-      <div class="tab" data-tab="dore">Doré / Embarques</div>
+      <div class="tab active" data-tab="dore">Doré / Embarques</div>
       <div class="tab" data-tab="fletes">Fletes</div>
     </div>
   </div>
 
-  <div class="tabcontent active" id="tab-resumen"></div>
-  <div class="tabcontent" id="tab-pptoreal"></div>
-  <div class="tabcontent" id="tab-produccion"></div>
-  <div class="tabcontent" id="tab-dore"></div>
-  <div class="tabcontent" id="tab-fletes"></div>
+  <div class="tabcontent" id="tab-resumen">
+  <div class="insight">💡 <b>Mayor tonelaje triturado</b>: mayo 2026 (35,422t) &nbsp;·&nbsp; <b>Mejor recuperación Au</b>: febrero 2026 (95.93%) &nbsp;·&nbsp; <b>Mayor Oz Eq Au</b>: junio 2026 (2,573.2ozt)</div>
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="lbl">Toneladas molidas (acum.)</div><div class="val">298,917</div><div class="sub">13 meses visibles</div></div>
+    <div class="kpi-card"><div class="lbl">Toneladas trituradas (acum.)</div><div class="val">303,633</div><div class="sub">último mes: 31,393 ton <span class="trend up">↑ 14.4%</span></div></div>
+    <div class="kpi-card"><div class="lbl">Oz Au precipitadas (acum.)</div><div class="val">13,426.7</div><div class="sub">último mes: 1,373.0 oz <span class="trend down">↓ 16.9%</span></div></div>
+    <div class="kpi-card"><div class="lbl">Oz Ag precipitadas (acum.)</div><div class="val">533,659</div><div class="sub">último mes: 50,361 oz <span class="trend down">↓ 14.5%</span></div></div>
+    <div class="kpi-card"><div class="lbl">Equ. Oz en Au (acum.)</div><div class="val">21,464.3</div><div class="sub">último mes: 2,096.9 ozt <span class="trend down">↓ 18.5%</span></div></div>
+    <div class="kpi-card"><div class="lbl">Recuperación Au promedio</div><div class="val">91.53%</div><div class="sub">último mes: 93.84% <span class="trend down">↓ 0.8%</span></div></div>
+    <div class="kpi-card"><div class="lbl">Recuperación Ag promedio</div><div class="val">74.38%</div><div class="sub">último mes: 74.34% <span class="trend up">↑ 0.7%</span></div></div>
+    <div class="kpi-card"><div class="lbl">Ley cabeza Au / Ag (último mes)</div><div class="val">1.428 / 66.22</div><div class="sub">g/t <span class="trend down">↓ 6.4%</span></div></div>
+    <div class="kpi-card"><div class="lbl">m3 Bombeados (acum.)</div><div class="val">703,614</div><div class="sub">último mes: 83,838 m3 <span class="trend up">↑ 4.1%</span></div></div>
+    <div class="kpi-card"><div class="lbl">Ley Sol. Rica Au / Ag (último mes)</div><div class="val">0.519 / 18.89</div><div class="sub">mg/L <span class="trend down">↓ 20.2%</span></div></div>
+  </div>
+
+  <div class="chart-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <h3 style="margin:0;">Oz Au / Ag Eq. precipitadas por mes</h3>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12px;">
+    <select id="ozeqTypeSelect" style="font-size:12px;padding:3px 6px;border-radius:6px;border:1px solid #ccc;"><option value="bar" selected="">Barras</option><option value="line">Línea</option><option value="area">Área</option></select>
+    <label style="display:flex;align-items:center;gap:4px;cursor:pointer;"><input type="checkbox" id="ozeqLabelsChk" checked=""> Etiquetas de datos</label>
+    <label style="display:flex;align-items:center;gap:4px;cursor:pointer;"><input type="checkbox" id="ozeqTrendChk"> Tendencia</label>
+    <span id="ozeqResetBtn" title="Restablecer filtros de esta gráfica" style="cursor:pointer;opacity:.3;font-size:13px;user-select:none;transition:.15s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.3">↺</span>
+  </div>
+    </div>
+    <canvas id="chOzEq" width="1122" height="280" style="display: block; box-sizing: border-box; height: 280px; width: 1122px;"></canvas>
+  </div>
+  <div class="chart-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <h3 style="margin:0;">Recuperación % Au / Ag por mes</h3>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12px;">
+    <select id="recupTypeSelect" style="font-size:12px;padding:3px 6px;border-radius:6px;border:1px solid #ccc;"><option value="bar">Barras</option><option value="line" selected="">Línea</option><option value="area">Área</option></select>
+    <label style="display:flex;align-items:center;gap:4px;cursor:pointer;"><input type="checkbox" id="recupLabelsChk" checked=""> Etiquetas de datos</label>
+    <label style="display:flex;align-items:center;gap:4px;cursor:pointer;"><input type="checkbox" id="recupTrendChk"> Tendencia</label>
+    <span id="recupResetBtn" title="Restablecer filtros de esta gráfica" style="cursor:pointer;opacity:.3;font-size:13px;user-select:none;transition:.15s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.3">↺</span>
+  </div>
+    </div>
+    <canvas id="chRecup" width="1122" height="280" style="display: block; box-sizing: border-box; height: 280px; width: 1122px;"></canvas>
+  </div>
+
+  <div class="chart-box">
+    <h3>Comparativa mensual (mejor/peor por indicador)</h3>
+    <div class="tbl-wrap"><table class="datatbl" id="tblComparativa"><tbody><tr><th>Indicador</th><th>julio 2025</th><th>agosto 2025</th><th>septiembre 2025</th><th>octubre 2025</th><th>noviembre 2025</th><th>diciembre 2025</th><th>enero 2026</th><th>febrero 2026</th><th>marzo 2026</th><th>abril 2026</th><th>mayo 2026</th><th>junio 2026</th><th>julio 2026</th><th>Total / Prom.</th></tr><tr><td>Ton. trituración</td><td class="worst">9,564</td><td class="">14,897</td><td class="">18,032</td><td class="">22,020</td><td class="">18,360</td><td class="">22,855</td><td class="">18,899</td><td class="">20,964</td><td class="">32,948</td><td class="">30,846</td><td class="best">35,422</td><td class="">27,434</td><td class="">31,393</td><td class="agg-cell">303,633</td></tr><tr><td>Ton. molienda</td><td class="worst">13,890</td><td class="">14,282</td><td class="">15,711</td><td class="">18,613</td><td class="">19,156</td><td class="">19,232</td><td class="">21,805</td><td class="">22,034</td><td class="">28,791</td><td class="">30,652</td><td class="">31,773</td><td class="best">32,812</td><td class="">30,167</td><td class="agg-cell">298,917</td></tr><tr><td>Ley cabeza Au (g/t)</td><td class="best">1.710</td><td class="">1.513</td><td class="">1.314</td><td class="worst">1.104</td><td class="">1.359</td><td class="">1.438</td><td class="">1.268</td><td class="">1.570</td><td class="">1.421</td><td class="">1.566</td><td class="">1.586</td><td class="">1.526</td><td class="">1.428</td><td class="agg-cell">1.446</td></tr><tr><td>Ley cabeza Ag (g/t)</td><td class="worst">58.32</td><td class="">72.36</td><td class="">61.92</td><td class="">81.65</td><td class="">60.87</td><td class="">79.75</td><td class="best">114.75</td><td class="">79.86</td><td class="">84.97</td><td class="">64.15</td><td class="">62.62</td><td class="">70.39</td><td class="">66.22</td><td class="agg-cell">73.68</td></tr><tr><td>Recuperación Au %</td><td class="">86.13</td><td class="worst">85.63</td><td class="">86.74</td><td class="">90.59</td><td class="">90.04</td><td class="">89.71</td><td class="">94.52</td><td class="best">95.93</td><td class="">94.65</td><td class="">93.26</td><td class="">94.20</td><td class="">94.62</td><td class="">93.84</td><td class="agg-cell">91.53</td></tr><tr><td>Recuperación Ag %</td><td class="best">85.89</td><td class="">85.33</td><td class="">75.08</td><td class="">73.38</td><td class="">70.63</td><td class="">70.86</td><td class="">74.03</td><td class="">71.81</td><td class="worst">69.83</td><td class="">70.00</td><td class="">71.97</td><td class="">73.84</td><td class="">74.34</td><td class="agg-cell">74.38</td></tr><tr><td>Oz Au precipitadas</td><td class="worst">487.1</td><td class="">580.9</td><td class="">640.7</td><td class="">689.2</td><td class="">710.7</td><td class="">899.3</td><td class="">858.0</td><td class="">1,080.6</td><td class="">1,272.7</td><td class="">1,527.3</td><td class="best">1,654.5</td><td class="">1,652.7</td><td class="">1,373.0</td><td class="agg-cell">13,426.7</td></tr><tr><td>Oz Ag precipitadas</td><td class="worst">14,894</td><td class="">23,758</td><td class="">27,788</td><td class="">39,259</td><td class="">27,701</td><td class="">42,339</td><td class="">58,478</td><td class="">44,543</td><td class="">53,462</td><td class="">45,965</td><td class="">46,212</td><td class="best">58,899</td><td class="">50,361</td><td class="agg-cell">533,659</td></tr><tr><td>Equ. Oz en Au</td><td class="worst">657.1</td><td class="">849.7</td><td class="">879.8</td><td class="">1,172.9</td><td class="">1,057.2</td><td class="">1,546.8</td><td class="">1,984.1</td><td class="">1,813.2</td><td class="">2,131.8</td><td class="">2,265.6</td><td class="">2,436.0</td><td class="best">2,573.2</td><td class="">2,096.9</td><td class="agg-cell">21,464.3</td></tr><tr><td>m3 Bombeados</td><td class="worst">30,093</td><td class="">35,726</td><td class="">37,246</td><td class="">48,242</td><td class="">38,108</td><td class="">40,259</td><td class="">48,272</td><td class="">52,743</td><td class="">64,937</td><td class="">70,714</td><td class="">72,910</td><td class="">80,526</td><td class="best">83,838</td><td class="agg-cell">703,614</td></tr><tr><td>Ley Sol. Rica Au (mg/L)</td><td class="">0.550</td><td class="">0.537</td><td class="">0.558</td><td class="worst">0.457</td><td class="">0.602</td><td class="">0.705</td><td class="">0.561</td><td class="">0.650</td><td class="">0.621</td><td class="">0.689</td><td class="best">0.724</td><td class="">0.650</td><td class="">0.519</td><td class="agg-cell">0.602</td></tr><tr><td>Ley Sol. Rica Ag (mg/L)</td><td class="worst">16.06</td><td class="">21.01</td><td class="">23.43</td><td class="">25.52</td><td class="">23.24</td><td class="">33.13</td><td class="best">37.94</td><td class="">26.64</td><td class="">25.95</td><td class="">20.47</td><td class="">19.98</td><td class="">22.97</td><td class="">18.89</td><td class="agg-cell">24.25</td></tr></tbody></table></div>
+  </div>
+  </div>
+  <div class="tabcontent" id="tab-pptoreal">
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="lbl">Cumplimiento Tonelaje (acum.)</div><div class="val">102%</div><div class="sub">298,917 / 292,468 ton</div></div>
+    <div class="kpi-card"><div class="lbl">Cumplimiento Oz Au Eq (acum.)</div><div class="val">111%</div><div class="sub">21,490.4 / 19,308.1 ozt</div></div>
+    <div class="kpi-card"><div class="lbl">Último mes (Julio)</div><div class="val">89% ton</div><div class="sub">96% Oz Au Eq</div></div>
+  </div>
+  <div class="chart-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <h3 style="margin:0;">Tonelaje Real vs Oz Au Eq Real (mensual)</h3>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12px;">
+    <select id="pptorealTypeSelect" style="font-size:12px;padding:3px 6px;border-radius:6px;border:1px solid #ccc;"><option value="bar">Barras</option><option value="line" selected="">Línea</option><option value="area">Área</option></select>
+    <label style="display:flex;align-items:center;gap:4px;cursor:pointer;"><input type="checkbox" id="pptorealLabelsChk"> Etiquetas de datos</label>
+    <label style="display:flex;align-items:center;gap:4px;cursor:pointer;"><input type="checkbox" id="pptorealTrendChk"> Tendencia</label>
+    <span id="pptorealResetBtn" title="Restablecer filtros de esta gráfica" style="cursor:pointer;opacity:.3;font-size:13px;user-select:none;transition:.15s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.3">↺</span>
+  </div>
+    </div>
+    <canvas id="chPptoReal" width="1122" height="280" style="display: block; box-sizing: border-box; height: 280px; width: 1122px;"></canvas>
+  </div>
+  <div class="chart-box">
+    <h3>Presupuesto vs Real, detalle mensual</h3>
+    <div class="tbl-wrap"><table class="datatbl" id="tblPptoReal"><tbody><tr><th>Mes</th><th>Ptto Ton.</th><th>Real Ton.</th><th>Cumpl. Ton %</th><th>Ptto Oz Au Eq</th><th>Real Oz Au Eq</th><th>Cumpl. Oz Eq %</th></tr><tr><td>Julio 2025</td><td>16,300</td><td>13,890</td>
+    <td>85%</td><td>1,029.0</td><td>562.0</td><td>55%</td></tr><tr><td>Agosto 2025</td><td>16,668</td><td>14,282</td>
+    <td>86%</td><td>1,074.0</td><td>803.0</td><td>75%</td></tr><tr><td>Septiembre 2025</td><td>14,500</td><td>15,711</td>
+    <td>108%</td><td>999.0</td><td>889.1</td><td>89%</td></tr><tr><td>Octubre 2025</td><td>15,000</td><td>18,613</td>
+    <td>124%</td><td>968.0</td><td>1,235.8</td><td>128%</td></tr><tr><td>Noviembre 2025</td><td>16,000</td><td>19,156</td>
+    <td>120%</td><td>1,068.0</td><td>1,064.8</td><td>100%</td></tr><tr><td>Diciembre 2025</td><td>19,000</td><td>19,232</td>
+    <td>101%</td><td>1,153.0</td><td>1,601.0</td><td>139%</td></tr><tr><td>Enero 2026</td><td>20,000</td><td>21,805</td>
+    <td>109%</td><td>1,234.9</td><td>2,041.3</td><td>165%</td></tr><tr><td>Febrero 2026</td><td>22,000</td><td>22,034</td>
+    <td>100%</td><td>1,467.7</td><td>1,775.7</td><td>121%</td></tr><tr><td>Marzo 2026</td><td>29,000</td><td>28,791</td>
+    <td>99%</td><td>2,019.8</td><td>2,125.1</td><td>105%</td></tr><tr><td>Abril 2026</td><td>30,000</td><td>30,652</td>
+    <td>102%</td><td>2,003.9</td><td>2,293.4</td><td>114%</td></tr><tr><td>Mayo 2026</td><td>30,000</td><td>31,773</td>
+    <td>106%</td><td>2,005.0</td><td>2,430.4</td><td>121%</td></tr><tr><td>Junio 2026</td><td>30,000</td><td>32,812</td>
+    <td>109%</td><td>2,091.6</td><td>2,559.7</td><td>122%</td></tr><tr><td>Julio 2026</td><td>34,000</td><td>30,167</td>
+    <td>89%</td><td>2,194.2</td><td>2,109.1</td><td>96%</td></tr></tbody></table></div>
+  </div>
+  </div>
+  <div class="tabcontent" id="tab-produccion">
+    <div class="chart-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+        <h3 style="margin:0;">Gráfica por mes</h3>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <select id="prodMetricSelect" style="font-size:12px;padding:3px 6px;border-radius:6px;border:1px solid #ccc;"><option value="ton_trituracion">Ton. triturada</option><option value="ton_molienda" selected="">Ton. seca molienda</option><option value="ley_au">Ley Au (g/t)</option><option value="ley_ag">Ley Ag (g/t)</option><option value="recuperacion_au">Recuperación Au %</option><option value="recuperacion_ag">Recuperación Ag %</option><option value="oz_au">Oz Au precipitadas</option><option value="oz_ag">Oz Ag precipitadas</option><option value="oz_eq_au">Oz Eq Au</option><option value="oz_eq_ag">Oz Eq Ag</option><option value="m3_bombeados">m3 Bombeados</option><option value="ley_rica_au">Ley Sol. Rica Au</option><option value="ley_rica_ag">Ley Sol. Rica Ag</option></select>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12px;">
+    <select id="prodTypeSelect" style="font-size:12px;padding:3px 6px;border-radius:6px;border:1px solid #ccc;"><option value="bar" selected="">Barras</option><option value="line">Línea</option><option value="area">Área</option></select>
+    <label style="display:flex;align-items:center;gap:4px;cursor:pointer;"><input type="checkbox" id="prodLabelsChk"> Etiquetas de datos</label>
+    <label style="display:flex;align-items:center;gap:4px;cursor:pointer;"><input type="checkbox" id="prodTrendChk"> Tendencia</label>
+    <span id="prodResetBtn" title="Restablecer filtros de esta gráfica" style="cursor:pointer;opacity:.3;font-size:13px;user-select:none;transition:.15s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.3">↺</span>
+  </div>
+        </div>
+      </div>
+      <canvas id="chTon" width="1122" height="280" style="display: block; box-sizing: border-box; height: 280px; width: 1122px;"></canvas>
+    </div>
+    <div class="chart-box"><h3>Tabla detallada</h3><div class="tbl-wrap"><table class="datatbl"><tbody><tr><th>Mes</th><th>Ton. triturada</th><th>Ton. seca molienda</th><th>Ley Au (g/t)</th><th>Ley Ag (g/t)</th>
+    <th>Recup. Au %</th><th>Recup. Ag %</th><th>Oz Au precip.</th><th>Oz Ag precip.</th>
+    <th>Oz Eq Au</th><th>Oz Eq Ag</th></tr><tr><td>julio 2025</td><td>9,564</td><td>13,890</td><td>1.710</td>
+    <td>58.32</td><td>86.13</td><td>85.89</td>
+    <td>487.1</td><td>14,894</td><td>657.1</td><td>59,650</td></tr><tr><td>agosto 2025</td><td>14,897</td><td>14,282</td><td>1.513</td>
+    <td>72.36</td><td>85.63</td><td>85.33</td>
+    <td>580.9</td><td>23,758</td><td>849.7</td><td>75,857</td></tr><tr><td>septiembre 2025</td><td>18,032</td><td>15,711</td><td>1.314</td>
+    <td>61.92</td><td>86.74</td><td>75.08</td>
+    <td>640.7</td><td>27,788</td><td>879.8</td><td>83,654</td></tr><tr><td>octubre 2025</td><td>22,020</td><td>18,613</td><td>1.104</td>
+    <td>81.65</td><td>90.59</td><td>73.38</td>
+    <td>689.2</td><td>39,259</td><td>1,172.9</td><td>94,982</td></tr><tr><td>noviembre 2025</td><td>18,360</td><td>19,156</td><td>1.359</td>
+    <td>60.87</td><td>90.04</td><td>70.63</td>
+    <td>710.7</td><td>27,701</td><td>1,057.2</td><td>86,153</td></tr><tr><td>diciembre 2025</td><td>22,855</td><td>19,232</td><td>1.438</td>
+    <td>79.75</td><td>89.71</td><td>70.86</td>
+    <td>899.3</td><td>42,339</td><td>1,546.8</td><td>106,011</td></tr><tr><td>enero 2026</td><td>18,899</td><td>21,805</td><td>1.268</td>
+    <td>114.75</td><td>94.52</td><td>74.03</td>
+    <td>858.0</td><td>58,478</td><td>1,984.1</td><td>107,867</td></tr><tr><td>febrero 2026</td><td>20,964</td><td>22,034</td><td>1.570</td>
+    <td>79.86</td><td>95.93</td><td>71.81</td>
+    <td>1,080.6</td><td>44,543</td><td>1,813.2</td><td>111,691</td></tr><tr><td>marzo 2026</td><td>32,948</td><td>28,791</td><td>1.421</td>
+    <td>84.97</td><td>94.65</td><td>69.83</td>
+    <td>1,272.7</td><td>53,462</td><td>2,131.8</td><td>132,662</td></tr><tr><td>abril 2026</td><td>30,846</td><td>30,652</td><td>1.566</td>
+    <td>64.15</td><td>93.26</td><td>70.00</td>
+    <td>1,527.3</td><td>45,965</td><td>2,265.6</td><td>143,345</td></tr><tr><td>mayo 2026</td><td>35,422</td><td>31,773</td><td>1.586</td>
+    <td>62.62</td><td>94.20</td><td>71.97</td>
+    <td>1,654.5</td><td>46,212</td><td>2,436.0</td><td>144,046</td></tr><tr><td>junio 2026</td><td>27,434</td><td>32,812</td><td>1.526</td>
+    <td>70.39</td><td>94.62</td><td>73.84</td>
+    <td>1,652.7</td><td>58,899</td><td>2,573.2</td><td>161,690</td></tr><tr><td>julio 2026</td><td>31,393</td><td>30,167</td><td>1.428</td>
+    <td>66.22</td><td>93.84</td><td>74.34</td>
+    <td>1,373.0</td><td>50,361</td><td>2,096.9</td><td>145,879</td></tr></tbody></table></div></div>
+  </div>
+  <div class="tabcontent active" id="tab-dore">
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="lbl">Embarques (Doré)</div><div class="val">23</div><div class="sub">en el periodo visible</div></div>
+    <div class="kpi-card"><div class="lbl">Au Eq. total (ozt)</div><div class="val">21,450.1</div></div>
+    <div class="kpi-card"><div class="lbl">Ag Eq. total (ozt)</div><div class="val">1,425,574</div></div>
+  </div>
+  <div class="chart-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <h3 style="margin:0;">Au Eq / Ag Eq por embarque</h3>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12px;">
+    <select id="doreTypeSelect" style="font-size:12px;padding:3px 6px;border-radius:6px;border:1px solid #ccc;"><option value="bar" selected="">Barras</option><option value="line">Línea</option><option value="area">Área</option></select>
+    <label style="display:flex;align-items:center;gap:4px;cursor:pointer;"><input type="checkbox" id="doreLabelsChk" checked=""> Etiquetas de datos</label>
+    <label style="display:flex;align-items:center;gap:4px;cursor:pointer;"><input type="checkbox" id="doreTrendChk"> Tendencia</label>
+    <span id="doreResetBtn" title="Restablecer filtros de esta gráfica" style="cursor:pointer;opacity:.3;font-size:13px;user-select:none;transition:.15s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.3">↺</span>
+  </div>
+    </div>
+    <canvas id="chDore" width="1122" height="280" style="display: block; box-sizing: border-box; height: 280px; width: 1122px;"></canvas>
+  </div>
+  <div class="chart-box"><h3>Detalle de embarques</h3><div class="tbl-wrap"><table class="datatbl"><tbody><tr><th>Embarque</th><th>Fecha</th><th>Peso seco (kg)</th><th>Au (oz)</th><th>Ag (oz)</th><th>Au Eq (ozt)</th><th>Ag Eq (ozt)</th></tr><tr><td>EMBARQUE 01</td><td>2025-07-28</td><td>968.1</td>
+    <td>285.58</td><td>8,370.03</td><td>382.79</td><td>32,959.41</td></tr><tr><td>EMBARQUE 02</td><td>2025-08-11</td><td>494.0</td>
+    <td>303.34</td><td>9,081.82</td><td>406.17</td><td>35,874.44</td></tr><tr><td>EMBARQUE 03</td><td>2025-08-25</td><td>535.4</td>
+    <td>267.09</td><td>11,595.96</td><td>398.65</td><td>35,138.15</td></tr><tr><td>EMBARQUE 04</td><td>2025-09-19</td><td>817.5</td>
+    <td>430.41</td><td>19,854.10</td><td>655.83</td><td>57,761.62</td></tr><tr><td>EMBARQUE 05</td><td>2025-10-13</td><td>1,088.5</td>
+    <td>596.62</td><td>27,849.18</td><td>941.57</td><td>76,015.63</td></tr><tr><td>EMBARQUE 06</td><td>2025-11-03</td><td>1,236.6</td>
+    <td>459.28</td><td>26,742.28</td><td>784.75</td><td>64,479.40</td></tr><tr><td>EMBARQUE 07</td><td>2025-11-14</td><td>813.4</td>
+    <td>200.21</td><td>8,241.09</td><td>302.35</td><td>24,394.83</td></tr><tr><td>EMBARQUE 08</td><td>2025-11-23</td><td>798.1</td>
+    <td>278.97</td><td>9,220.31</td><td>406.18</td><td>29,441.21</td></tr><tr><td>EMBARQUE 09</td><td>2025-12-04</td><td>1,621.4</td>
+    <td>347.51</td><td>11,009.69</td><td>499.40</td><td>36,198.29</td></tr><tr><td>EMBARQUE 10</td><td>2025-12-17</td><td>843.6</td>
+    <td>451.24</td><td>15,269.61</td><td>672.07</td><td>46,472.02</td></tr><tr><td>EMBARQUE 11</td><td>2026-01-03</td><td>1,144.0</td>
+    <td>489.20</td><td>21,360.98</td><td>833.96</td><td>51,671.15</td></tr><tr><td>EMBARQUE 12</td><td>2026-01-21</td><td>1,378.3</td>
+    <td>514.44</td><td>31,087.82</td><td>1,081.99</td><td>59,266.12</td></tr><tr><td>EMBARQUE 13</td><td>2026-02-04</td><td>1,415.7</td>
+    <td>377.00</td><td>31,098.72</td><td>944.76</td><td>51,749.09</td></tr><tr><td>EMBARQUE 14</td><td>2026-02-22</td><td>1,186.4</td>
+    <td>715.90</td><td>22,281.24</td><td>1,082.31</td><td>65,815.03</td></tr><tr><td>EMBARQUE 15</td><td>2026-03-10</td><td>1,366.1</td>
+    <td>609.50</td><td>31,369.63</td><td>1,131.75</td><td>67,980.21</td></tr><tr><td>EMBARQUE 16</td><td>2026-03-29</td><td>1,496.5</td>
+    <td>795.84</td><td>31,443.24</td><td>1,305.02</td><td>80,588.06</td></tr><tr><td>EMBARQUE 17</td><td>2026-04-18</td><td>1,278.3</td>
+    <td>1,001.82</td><td>32,292.91</td><td>1,524.76</td><td>94,157.52</td></tr><tr><td>EMBARQUE 18</td><td>2026-05-06</td><td>983.6</td>
+    <td>961.89</td><td>24,054.48</td><td>1,347.40</td><td>84,072.97</td></tr><tr><td>EMBARQUE 19</td><td>2026-05-27</td><td>1,310.2</td>
+    <td>1,081.75</td><td>31,084.83</td><td>1,615.27</td><td>94,111.33</td></tr><tr><td>EMBARQUE 20</td><td>2026-06-14</td><td>1,482.6</td>
+    <td>1,148.23</td><td>34,511.33</td><td>1,740.56</td><td>101,411.18</td></tr><tr><td>EMBARQUE 21</td><td>2026-07-09</td><td>1,839.6</td>
+    <td>1,213.58</td><td>41,542.21</td><td>1,810.71</td><td>125,970.34</td></tr><tr><td>EMBARQUE 22</td><td>2026-07-26</td><td>1,117.4</td>
+    <td>723.61</td><td>25,322.92</td><td>1,087.60</td><td>75,663.89</td></tr><tr><td>EMBARQUE 23</td><td>pendiente</td><td>523.7</td>
+    <td>325.72</td><td>11,721.55</td><td>494.21</td><td>34,381.76</td></tr></tbody></table></div></div>
+  </div>
+  <div class="tabcontent" id="tab-fletes">
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="lbl">Camiones (acum. periodo visible)</div><div class="val">18,818</div></div>
+    <div class="kpi-card"><div class="lbl">Ton. húmedas transportadas</div><div class="val">341,418</div></div>
+  </div>
+  <div class="chart-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <h3 style="margin:0;">Toneladas transportadas por mes</h3>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12px;">
+    <select id="fletesTypeSelect" style="font-size:12px;padding:3px 6px;border-radius:6px;border:1px solid #ccc;"><option value="bar" selected="">Barras</option><option value="line">Línea</option><option value="area">Área</option></select>
+    <label style="display:flex;align-items:center;gap:4px;cursor:pointer;"><input type="checkbox" id="fletesLabelsChk"> Etiquetas de datos</label>
+    <label style="display:flex;align-items:center;gap:4px;cursor:pointer;"><input type="checkbox" id="fletesTrendChk"> Tendencia</label>
+    <span id="fletesResetBtn" title="Restablecer filtros de esta gráfica" style="cursor:pointer;opacity:.3;font-size:13px;user-select:none;transition:.15s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.3">↺</span>
+  </div>
+    </div>
+    <canvas id="chFletes" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0"></canvas>
+  </div>
+  <div class="chart-box"><h3>Detalle</h3><div class="tbl-wrap"><table class="datatbl"><tbody><tr><th>Mes</th><th>Camiones</th><th>Ton. húmedas transportadas</th></tr><tr><td>Junio 2025</td><td>374</td><td>6,780.8</td></tr><tr><td>Julio 2025</td><td>580</td><td>10,076.0</td></tr><tr><td>Agosto 2025</td><td>692</td><td>12,071.6</td></tr><tr><td>Septiembre 2025</td><td>700</td><td>13,826.8</td></tr><tr><td>Octubre 2025</td><td>1,510</td><td>27,609.9</td></tr><tr><td>Noviembre 2025</td><td>1,470</td><td>26,435.4</td></tr><tr><td>Diciembre 2025</td><td>1,376</td><td>24,988.8</td></tr><tr><td>Enero 2026</td><td>1,532</td><td>27,980.9</td></tr><tr><td>Febrero 2026</td><td>1,455</td><td>26,504.1</td></tr><tr><td>Marzo 2026</td><td>1,596</td><td>28,957.1</td></tr><tr><td>Abril 2026</td><td>1,691</td><td>30,342.5</td></tr><tr><td>Mayo 2026</td><td>2,128</td><td>39,158.2</td></tr><tr><td>Junio 2026</td><td>2,289</td><td>41,207.7</td></tr><tr><td>Julio 2026</td><td>1,425</td><td>25,477.9</td></tr></tbody></table></div></div>
+  <div class="small-note">Nota: los totales mensuales provienen directamente de la tabla mensual de la hoja FLETES (camiones y toneladas húmedas por mina, sin acumulados/Stock). Se actualiza automáticamente al arrastrar un balance mensual más reciente.</div>
+  </div>
 
 </div>
 <div class="footer-bar"></div>
 
 <script>
-const IS_LOCKED_COPY = false;
-const MONTHS_BASE = [{"periodo": "2025-07", "label": "julio 2025", "ton_trituracion": 9564.0, "ton_molienda": 13890.3, "ley_au": 1.71, "ley_ag": 58.32, "recuperacion_au": 86.13, "recuperacion_ag": 85.89, "oz_au": 487.1, "oz_ag": 14894.2, "oz_eq_au": 657.1, "oz_eq_ag": 59650.0, "m3_bombeados": 30093.0, "ley_rica_au": 0.55, "ley_rica_ag": 16.06, "camiones_cum": 580, "ton_fletes_cum": 10032.7}, {"periodo": "2025-08", "label": "agosto 2025", "ton_trituracion": 14896.7, "ton_molienda": 14281.5, "ley_au": 1.513, "ley_ag": 72.36, "recuperacion_au": 85.63, "recuperacion_ag": 85.33, "oz_au": 580.9, "oz_ag": 23758.1, "oz_eq_au": 849.7, "oz_eq_ag": 75856.9, "m3_bombeados": 35726.0, "ley_rica_au": 0.537, "ley_rica_ag": 21.01, "camiones_cum": 1646, "ton_fletes_cum": 28886.2}, {"periodo": "2025-09", "label": "septiembre 2025", "ton_trituracion": 18032.0, "ton_molienda": 15711.1, "ley_au": 1.314, "ley_ag": 61.92, "recuperacion_au": 86.74, "recuperacion_ag": 75.08, "oz_au": 640.7, "oz_ag": 27787.7, "oz_eq_au": 879.8, "oz_eq_ag": 83653.8, "m3_bombeados": 37246, "ley_rica_au": 0.558, "ley_rica_ag": 23.43, "camiones_cum": 2343, "ton_fletes_cum": 42659.9}, {"periodo": "2025-10", "label": "octubre 2025", "ton_trituracion": 22020.0, "ton_molienda": 18613.3, "ley_au": 1.104, "ley_ag": 81.65, "recuperacion_au": 90.59, "recuperacion_ag": 73.38, "oz_au": 689.2, "oz_ag": 39259.4, "oz_eq_au": 1172.9, "oz_eq_ag": 94982.2, "m3_bombeados": 48242, "ley_rica_au": 0.457, "ley_rica_ag": 25.52, "camiones_cum": 3852, "ton_fletes_cum": 70295.1}, {"periodo": "2025-11", "label": "noviembre 2025", "ton_trituracion": 18360.0, "ton_molienda": 19155.7, "ley_au": 1.359, "ley_ag": 60.87, "recuperacion_au": 90.04, "recuperacion_ag": 70.63, "oz_au": 710.7, "oz_ag": 27700.8, "oz_eq_au": 1057.2, "oz_eq_ag": 86153.1, "m3_bombeados": 38108, "ley_rica_au": 0.602, "ley_rica_ag": 23.24, "camiones_cum": 5316, "ton_fletes_cum": 96627.6}, {"periodo": "2025-12", "label": "diciembre 2025", "ton_trituracion": 22854.7, "ton_molienda": 19231.5, "ley_au": 1.438, "ley_ag": 79.75, "recuperacion_au": 89.71, "recuperacion_ag": 70.86, "oz_au": 899.3, "oz_ag": 42339.1, "oz_eq_au": 1546.8, "oz_eq_ag": 106010.8, "m3_bombeados": 40259, "ley_rica_au": 0.705, "ley_rica_ag": 33.13, "camiones_cum": 6677, "ton_fletes_cum": 121331.6}, {"periodo": "2026-01", "label": "enero 2026", "ton_trituracion": 18899.0, "ton_molienda": 21805.1, "ley_au": 1.268, "ley_ag": 114.75, "recuperacion_au": 94.52, "recuperacion_ag": 74.03, "oz_au": 858.0, "oz_ag": 58478.3, "oz_eq_au": 1984.1, "oz_eq_ag": 107866.5, "m3_bombeados": 48272, "ley_rica_au": 0.561, "ley_rica_ag": 37.94, "camiones_cum": 8100, "ton_fletes_cum": 149502.0}, {"periodo": "2026-02", "label": "febrero 2026", "ton_trituracion": 20963.6, "ton_molienda": 22034.4, "ley_au": 1.57, "ley_ag": 79.86, "recuperacion_au": 95.93, "recuperacion_ag": 71.81, "oz_au": 1080.6, "oz_ag": 44542.7, "oz_eq_au": 1813.2, "oz_eq_ag": 111690.5, "m3_bombeados": 52743, "ley_rica_au": 0.65, "ley_rica_ag": 26.64, "camiones_cum": 9543, "ton_fletes_cum": 175795.6}, {"periodo": "2026-03", "label": "marzo 2026", "ton_trituracion": 32948.3, "ton_molienda": 28791.3, "ley_au": 1.421, "ley_ag": 84.97, "recuperacion_au": 94.65, "recuperacion_ag": 69.83, "oz_au": 1272.7, "oz_ag": 53461.5, "oz_eq_au": 2131.8, "oz_eq_ag": 132661.9, "m3_bombeados": 64937, "ley_rica_au": 0.621, "ley_rica_ag": 25.95, "camiones_cum": 11126, "ton_fletes_cum": 204533.6}, {"periodo": "2026-04", "label": "abril 2026", "ton_trituracion": 30845.9, "ton_molienda": 30651.7, "ley_au": 1.566, "ley_ag": 64.15, "recuperacion_au": 93.26, "recuperacion_ag": 70.0, "oz_au": 1527.3, "oz_ag": 45965.3, "oz_eq_au": 2265.6, "oz_eq_ag": 143344.7, "m3_bombeados": 70714, "ley_rica_au": 0.689, "ley_rica_ag": 20.47, "camiones_cum": 12278, "ton_fletes_cum": 233807.0}, {"periodo": "2026-05", "label": "mayo 2026", "ton_trituracion": 35422.2, "ton_molienda": 31772.7, "ley_au": 1.586, "ley_ag": 62.62, "recuperacion_au": 94.2, "recuperacion_ag": 71.97, "oz_au": 1654.5, "oz_ag": 46212.4, "oz_eq_au": 2436.0, "oz_eq_ag": 144045.7, "m3_bombeados": 72910, "ley_rica_au": 0.724, "ley_rica_ag": 19.98, "camiones_cum": 13963, "ton_fletes_cum": 264613.7}, {"periodo": "2026-06", "label": "junio 2026", "ton_trituracion": 27433.6, "ton_molienda": 32811.5, "ley_au": 1.526, "ley_ag": 70.39, "recuperacion_au": 94.62, "recuperacion_ag": 73.84, "oz_au": 1652.7, "oz_ag": 58898.5, "oz_eq_au": 2573.2, "oz_eq_ag": 161689.7, "m3_bombeados": 80526, "ley_rica_au": 0.65, "ley_rica_ag": 22.97, "camiones_cum": 15545, "ton_fletes_cum": 292876.9}, {"periodo": "2026-07", "label": "julio 2026", "ton_trituracion": 31393.1, "ton_molienda": 30166.6, "ley_au": 1.428, "ley_ag": 66.22, "recuperacion_au": 93.84, "recuperacion_ag": 74.34, "oz_au": 1373.0, "oz_ag": 50361.3, "oz_eq_au": 2096.9, "oz_eq_ag": 145878.9, "m3_bombeados": 83838, "ley_rica_au": 0.519, "ley_rica_ag": 18.89, "camiones_cum": 16763, "ton_fletes_cum": 314428.6}];
-const EMBARQUES_BASE = [{"nombre": "EMBARQUE 01", "fecha": "2025-07-28", "periodo": "2025-07", "peso_seco_kg": 968.1, "au_oz": 285.58, "ag_oz": 8370.03, "au_eq_oz": 382.79, "ag_eq_oz": 32959.41}, {"nombre": "EMBARQUE 02", "fecha": "2025-08-11", "periodo": "2025-08", "peso_seco_kg": 494.0, "au_oz": 303.34, "ag_oz": 9081.82, "au_eq_oz": 406.17, "ag_eq_oz": 35874.44}, {"nombre": "EMBARQUE 03", "fecha": "2025-08-25", "periodo": "2025-08", "peso_seco_kg": 535.4, "au_oz": 267.09, "ag_oz": 11595.96, "au_eq_oz": 398.65, "ag_eq_oz": 35138.15}, {"nombre": "EMBARQUE 04", "fecha": "2025-09-19", "periodo": "2025-09", "peso_seco_kg": 817.5, "au_oz": 430.41, "ag_oz": 19854.1, "au_eq_oz": 655.83, "ag_eq_oz": 57761.62}, {"nombre": "EMBARQUE 05", "fecha": "2025-10-13", "periodo": "2025-10", "peso_seco_kg": 1088.5, "au_oz": 596.62, "ag_oz": 27849.18, "au_eq_oz": 941.57, "ag_eq_oz": 76015.63}, {"nombre": "EMBARQUE 06", "fecha": "2025-11-03", "periodo": "2025-11", "peso_seco_kg": 1236.6, "au_oz": 459.28, "ag_oz": 26742.28, "au_eq_oz": 784.75, "ag_eq_oz": 64479.4}, {"nombre": "EMBARQUE 07", "fecha": "2025-11-14", "periodo": "2025-11", "peso_seco_kg": 813.4, "au_oz": 200.21, "ag_oz": 8241.09, "au_eq_oz": 302.35, "ag_eq_oz": 24394.83}, {"nombre": "EMBARQUE 08", "fecha": "2025-11-23", "periodo": "2025-11", "peso_seco_kg": 798.1, "au_oz": 278.97, "ag_oz": 9220.31, "au_eq_oz": 406.18, "ag_eq_oz": 29441.21}, {"nombre": "EMBARQUE 09", "fecha": "2025-12-04", "periodo": "2025-12", "peso_seco_kg": 1621.4, "au_oz": 347.51, "ag_oz": 11009.69, "au_eq_oz": 499.4, "ag_eq_oz": 36198.29}, {"nombre": "EMBARQUE 10", "fecha": "2025-12-17", "periodo": "2025-12", "peso_seco_kg": 843.6, "au_oz": 451.24, "ag_oz": 15269.61, "au_eq_oz": 672.07, "ag_eq_oz": 46472.02}, {"nombre": "EMBARQUE 11", "fecha": "2026-01-03", "periodo": "2026-01", "peso_seco_kg": 1144.0, "au_oz": 489.2, "ag_oz": 21360.98, "au_eq_oz": 833.96, "ag_eq_oz": 51671.15}, {"nombre": "EMBARQUE 12", "fecha": "2026-01-21", "periodo": "2026-01", "peso_seco_kg": 1378.3, "au_oz": 514.44, "ag_oz": 31087.82, "au_eq_oz": 1081.99, "ag_eq_oz": 59266.12}, {"nombre": "EMBARQUE 13", "fecha": "2026-02-04", "periodo": "2026-02", "peso_seco_kg": 1415.7, "au_oz": 377.0, "ag_oz": 31098.72, "au_eq_oz": 944.76, "ag_eq_oz": 51749.09}, {"nombre": "EMBARQUE 14", "fecha": "2026-02-22", "periodo": "2026-02", "peso_seco_kg": 1186.4, "au_oz": 715.9, "ag_oz": 22281.24, "au_eq_oz": 1082.31, "ag_eq_oz": 65815.03}, {"nombre": "EMBARQUE 15", "fecha": "2026-03-10", "periodo": "2026-03", "peso_seco_kg": 1366.1, "au_oz": 609.5, "ag_oz": 31369.63, "au_eq_oz": 1131.75, "ag_eq_oz": 67980.21}, {"nombre": "EMBARQUE 16", "fecha": "2026-03-29", "periodo": "2026-03", "peso_seco_kg": 1496.5, "au_oz": 795.84, "ag_oz": 31443.24, "au_eq_oz": 1305.02, "ag_eq_oz": 80588.06}, {"nombre": "EMBARQUE 17", "fecha": "2026-04-18", "periodo": "2026-04", "peso_seco_kg": 1278.3, "au_oz": 1001.82, "ag_oz": 32292.91, "au_eq_oz": 1524.76, "ag_eq_oz": 94157.52}, {"nombre": "EMBARQUE 18", "fecha": "2026-05-06", "periodo": "2026-05", "peso_seco_kg": 983.6, "au_oz": 961.89, "ag_oz": 24054.48, "au_eq_oz": 1347.4, "ag_eq_oz": 84072.97}, {"nombre": "EMBARQUE 19", "fecha": "2026-05-27", "periodo": "2026-05", "peso_seco_kg": 1310.2, "au_oz": 1081.75, "ag_oz": 31084.83, "au_eq_oz": 1615.27, "ag_eq_oz": 94111.33}, {"nombre": "EMBARQUE 20", "fecha": "2026-06-14", "periodo": "2026-06", "peso_seco_kg": 1482.6, "au_oz": 1148.23, "ag_oz": 34511.33, "au_eq_oz": 1740.56, "ag_eq_oz": 101411.18}, {"nombre": "EMBARQUE 21", "fecha": "2026-07-09", "periodo": "2026-07", "peso_seco_kg": 1839.6, "au_oz": 1213.58, "ag_oz": 41542.21, "au_eq_oz": 1810.71, "ag_eq_oz": 125970.34}, {"nombre": "EMBARQUE 22", "fecha": "2026-07-26", "periodo": "2026-07", "peso_seco_kg": 1117.4, "au_oz": 723.61, "ag_oz": 25322.92, "au_eq_oz": 1087.6, "ag_eq_oz": 75663.89}, {"nombre": "EMBARQUE 23", "fecha": "pendiente", "periodo": "2026-07", "peso_seco_kg": 523.7, "au_oz": 325.72, "ag_oz": 11721.55, "au_eq_oz": 494.21, "ag_eq_oz": 34381.76}];
-const PTTO_REAL = [{"periodo": "2025-07", "mes_label": "Julio", "ptto_ton": 16300, "ptto_ley_au": 1.62, "ptto_ley_ag": 63.47, "ptto_oz_au": 722, "ptto_oz_ag": 27236, "ptto_oz_eq_au": 1029, "real_ton": 13890, "real_ley_au": 1.66, "real_ley_ag": 51.07, "real_oz_au": 421, "real_oz_ag": 12273, "real_oz_eq_au": 562, "cump_ton": 0.8521472392638036, "cump_ley_au": 1.0246913580246912, "cump_ley_ag": 0.8046321096581062, "cump_oz_au": 0.5831024930747922, "cump_oz_ag": 0.45061683066529595, "cump_oz_eq_au": 0.5461613216715258}, {"periodo": "2025-08", "mes_label": "Agosto", "ptto_ton": 16668, "ptto_ley_au": 1.37, "ptto_ley_ag": 88.03, "ptto_oz_au": 650, "ptto_oz_ag": 37616, "ptto_oz_eq_au": 1074, "real_ton": 14282, "real_ley_au": 1.43, "real_ley_ag": 70.56, "real_oz_au": 549, "real_oz_ag": 22232, "real_oz_eq_au": 803, "cump_ton": 0.8568514518838493, "cump_ley_au": 1.0437956204379562, "cump_ley_ag": 0.8015449278655005, "cump_oz_au": 0.8446153846153847, "cump_oz_ag": 0.5910250957039558, "cump_oz_eq_au": 0.7476722532588455}, {"periodo": "2025-09", "mes_label": "Septiembre", "ptto_ton": 14500, "ptto_ley_au": 1.23, "ptto_ley_ag": 114.09, "ptto_oz_au": 531, "ptto_oz_ag": 41620, "ptto_oz_eq_au": 999, "real_ton": 15711, "real_ley_au": 1.3759426733463545, "real_ley_ag": 63.35927599317669, "real_oz_au": 587.3159683887955, "real_oz_ag": 25564.435061200948, "real_oz_eq_au": 889.1114201880157, "cump_ton": 1.0835172413793104, "cump_ley_au": 1.1186525799563858, "cump_ley_ag": 0.5553446927265903, "cump_oz_au": 1.1060564376436826, "cump_oz_ag": 0.6142343839788791, "cump_oz_eq_au": 0.8900014216096254}, {"periodo": "2025-10", "mes_label": "Octubre", "ptto_ton": 15000, "ptto_ley_au": 1.43, "ptto_ley_ag": 80.91, "ptto_oz_au": 622, "ptto_oz_ag": 30276, "ptto_oz_eq_au": 968, "real_ton": 18613, "real_ley_au": 1.0715186210008132, "real_ley_ag": 81.960434792458, "real_oz_au": 735.6651092742674, "real_oz_ag": 40796.396412684946, "real_oz_eq_au": 1235.7829244607058, "cump_ton": 1.2408666666666666, "cump_ley_au": 0.7493137209795897, "cump_ley_ag": 1.0129827560555926, "cump_oz_au": 1.182741333238372, "cump_oz_ag": 1.3474830364871497, "cump_oz_eq_au": 1.2766352525420515}, {"periodo": "2025-11", "mes_label": "Noviembre", "ptto_ton": 16000, "ptto_ley_au": 1.56, "ptto_ley_ag": 76.49, "ptto_oz_au": 726, "ptto_oz_ag": 29863, "ptto_oz_eq_au": 1068, "real_ton": 19156, "real_ley_au": 1.461241373413, "real_ley_ag": 61.69664566130291, "real_oz_au": 722.9649434567406, "real_oz_ag": 25925.883444597708, "real_oz_eq_au": 1064.8214604427849, "cump_ton": 1.19725, "cump_ley_au": 0.9366931880852565, "cump_ley_ag": 0.8065975377343825, "cump_oz_au": 0.9958194813453727, "cump_oz_ag": 0.8681607154203431, "cump_oz_eq_au": 0.9970238393659034}, {"periodo": "2025-12", "mes_label": "Diciembre", "ptto_ton": 19000, "ptto_ley_au": 1.28, "ptto_ley_ag": 92.08, "ptto_oz_au": 668, "ptto_oz_ag": 42466, "ptto_oz_eq_au": 1152.96, "real_ton": 19231.5137555, "real_ley_au": 1.6213827670426821, "real_ley_ag": 81.86583084824923, "real_oz_au": 1017.5091998980588, "real_oz_ag": 38490.1647457632, "real_oz_eq_au": 1600.9940475850074, "cump_ton": 1.0121849345, "cump_ley_au": 1.2667052867520954, "cump_ley_ag": 0.8890728806282497, "cump_oz_au": 1.5232173651168546, "cump_oz_ag": 0.9063760360232468, "cump_oz_eq_au": 1.3885946152381758}, {"periodo": "2026-01", "mes_label": "Enero", "ptto_ton": 20000, "ptto_ley_au": 1.5, "ptto_ley_ag": 75.93, "ptto_oz_au": 761.3, "ptto_oz_ag": 38470.8, "ptto_oz_eq_au": 1234.88, "real_ton": 21805.063269999995, "real_ley_au": 1.3144075209779227, "real_ley_ag": 118.40084347448817, "real_oz_au": 887.0316944190946, "real_oz_ag": 59152.74392719102, "real_oz_eq_au": 2041.297387335344, "cump_ton": 1.0902531634999997, "cump_ley_au": 0.8762716806519485, "cump_ley_ag": 1.5593420713089445, "cump_oz_au": 1.1651539398648294, "cump_oz_ag": 1.5376010877650326, "cump_oz_eq_au": 1.6530329969999868}, {"periodo": "2026-02", "mes_label": "Febrero", "ptto_ton": 22000, "ptto_ley_au": 1.4726731722828776, "ptto_ley_ag": 58.305640678246846, "ptto_oz_au": 902.5082861545521, "ptto_oz_ag": 28259.71822762138, "ptto_oz_eq_au": 1467.7026507069797, "real_ton": 22034.394179999996, "real_ley_au": 1.5896731349917093, "real_ley_ag": 80.10711021756279, "real_oz_au": 1083.030452871154, "real_oz_ag": 42120.84991776056, "real_oz_eq_au": 1775.6984465491405, "cump_ton": 1.0015633718181816, "cump_ley_au": 1.079447337610872, "cump_ley_ag": 1.3739169878884432, "cump_oz_au": 1.2000227249832562, "cump_oz_ag": 1.4904907960685592, "cump_oz_eq_au": 1.2098489061757856}, {"periodo": "2026-03", "mes_label": "Marzo", "ptto_ton": 29000, "ptto_ley_au": 1.4578620689655173, "ptto_ley_ag": 69.04696551724139, "ptto_oz_au": 1223.342407911186, "ptto_oz_ag": 49570.626434399586, "ptto_oz_eq_au": 2019.8432334591184, "real_ton": 28791.330800000003, "real_ley_au": 1.4428021579298413, "real_ley_ag": 82.78296507209285, "real_oz_au": 1265.2212477081273, "real_oz_ag": 53509.04432943666, "real_oz_eq_au": 2125.061753031967, "cump_ton": 0.9928045103448278, "cump_ley_au": 0.9896698656503476, "cump_ley_ag": 1.1989370488906064, "cump_oz_au": 1.0342331300918832, "cump_oz_ag": 1.0794506379750732, "cump_oz_eq_au": 1.0520924187728444}, {"periodo": "2026-04", "mes_label": "Abril", "ptto_ton": 30000, "ptto_ley_au": 1.436, "ptto_ley_ag": 59.793333333333344, "ptto_oz_au": 1378.0066411299015, "ptto_oz_ag": 43254.00940030051, "ptto_oz_eq_au": 2003.8816820783868, "real_ton": 30651.741347820724, "real_ley_au": 1.6757474905609524, "real_ley_ag": 66.41984886625724, "real_oz_au": 1548.4197372775066, "real_oz_ag": 46487.132457469124, "real_oz_eq_au": 2293.44618762977, "cump_ton": 1.0217247115940242, "cump_ley_au": 1.1669550769923067, "cump_ley_ag": 1.1108236514593137, "cump_oz_au": 1.1236663823389663, "cump_oz_ag": 1.074747361042238, "cump_oz_eq_au": 1.144501797756369}, {"periodo": "2026-05", "mes_label": "Mayo", "ptto_ton": 30000, "ptto_ley_au": 1.5118446247336164, "ptto_ley_ag": 53.94390450203012, "ptto_oz_au": 1378.0066411299015, "ptto_oz_ag": 39022.580316976084, "ptto_oz_eq_au": 2005.0214616630733, "real_ton": 31772.65403368213, "real_ley_au": 1.7380420574829922, "real_ley_ag": 60.68848801479934, "real_oz_au": 1684.507303875386, "real_oz_ag": 44105.917017371656, "real_oz_eq_au": 2430.400247177553, "cump_ton": 1.0590884677894044, "cump_ley_au": 1.149616851526149, "cump_ley_ag": 1.1250295760944666, "cump_oz_au": 1.2224232116139646, "cump_oz_ag": 1.130266544628884, "cump_oz_eq_au": 1.2121567243283509}, {"periodo": "2026-06", "mes_label": "Junio", "ptto_ton": 30000, "ptto_ley_au": 1.5715668469558388, "ptto_ley_ag": 56.70584894647457, "ptto_oz_au": 1432.4418770654456, "ptto_oz_ag": 41020.548389722906, "ptto_oz_eq_au": 2091.5600485915134, "real_ton": 32811.54889624733, "real_ley_au": 1.6644012996106343, "real_ley_ag": 72.20400059647716, "real_oz_au": 1668.5928554427217, "real_oz_ag": 56999.24294306782, "real_oz_eq_au": 2559.7391316370886, "cump_ton": 1.0937182965415777, "cump_ley_au": 1.0590712719822373, "cump_ley_ag": 1.273307814589488, "cump_oz_au": 1.1648590299950345, "cump_oz_ag": 1.38952903314545, "cump_oz_eq_au": 1.223842047165155}, {"periodo": "2026-07", "mes_label": "Julio", "ptto_ton": 34000, "ptto_ley_au": 1.5, "ptto_ley_ag": 54.38, "ptto_oz_au": 1536, "ptto_oz_ag": 44077.3, "ptto_oz_eq_au": 2194.23, "real_ton": 30166.64882174331, "real_ley_au": 1.5407060658596226, "real_ley_ag": 67.03529242076576, "real_oz_au": 1409.1039884057468, "real_oz_ag": 48698.040332282115, "real_oz_eq_au": 2109.0966968137454, "cump_ton": 0.8872543771100974, "cump_ley_au": 1.0271373772397483, "cump_ley_ag": 1.2327196105326546, "cump_oz_au": 0.9173854091183248, "cump_oz_ag": 1.1048326538214026, "cump_oz_eq_au": 0.9612012855597387}];
-const FLETES_FABRICA_BASE = [{"periodo": "2025-06", "label": "Junio 2025", "camiones_fabrica": 374, "ton_fabrica": 6780.83}, {"periodo": "2025-07", "label": "Julio 2025", "camiones_fabrica": 580, "ton_fabrica": 10076.03}, {"periodo": "2025-08", "label": "Agosto 2025", "camiones_fabrica": 692, "ton_fabrica": 12071.6}, {"periodo": "2025-09", "label": "Septiembre 2025", "camiones_fabrica": 700, "ton_fabrica": 13826.83}, {"periodo": "2025-10", "label": "Octubre 2025", "camiones_fabrica": 1510, "ton_fabrica": 27609.91}, {"periodo": "2025-11", "label": "Noviembre 2025", "camiones_fabrica": 1470, "ton_fabrica": 26435.43}, {"periodo": "2025-12", "label": "Diciembre 2025", "camiones_fabrica": 1376, "ton_fabrica": 24988.83}, {"periodo": "2026-01", "label": "Enero 2026", "camiones_fabrica": 1532, "ton_fabrica": 27980.85}, {"periodo": "2026-02", "label": "Febrero 2026", "camiones_fabrica": 1455, "ton_fabrica": 26504.06}, {"periodo": "2026-03", "label": "Marzo 2026", "camiones_fabrica": 1596, "ton_fabrica": 28957.07}, {"periodo": "2026-04", "label": "Abril 2026", "camiones_fabrica": 1691, "ton_fabrica": 30342.48}, {"periodo": "2026-05", "label": "Mayo 2026", "camiones_fabrica": 2128, "ton_fabrica": 39158.18}, {"periodo": "2026-06", "label": "Junio 2026", "camiones_fabrica": 2289, "ton_fabrica": 41207.74}, {"periodo": "2026-07", "label": "Julio 2026", "camiones_fabrica": 1425, "ton_fabrica": 25477.92}];
+const IS_LOCKED_COPY = true;
+const MONTHS_BASE = [{"periodo":"2025-07","label":"julio 2025","ton_trituracion":9564,"ton_molienda":13890.3,"ley_au":1.71,"ley_ag":58.32,"recuperacion_au":86.13,"recuperacion_ag":85.89,"oz_au":487.1,"oz_ag":14894.2,"oz_eq_au":657.1,"oz_eq_ag":59650,"m3_bombeados":30093,"ley_rica_au":0.55,"ley_rica_ag":16.06,"camiones_cum":580,"ton_fletes_cum":10032.7},{"periodo":"2025-08","label":"agosto 2025","ton_trituracion":14896.7,"ton_molienda":14281.5,"ley_au":1.513,"ley_ag":72.36,"recuperacion_au":85.63,"recuperacion_ag":85.33,"oz_au":580.9,"oz_ag":23758.1,"oz_eq_au":849.7,"oz_eq_ag":75856.9,"m3_bombeados":35726,"ley_rica_au":0.537,"ley_rica_ag":21.01,"camiones_cum":1646,"ton_fletes_cum":28886.2},{"periodo":"2025-09","label":"septiembre 2025","ton_trituracion":18032,"ton_molienda":15711.1,"ley_au":1.314,"ley_ag":61.92,"recuperacion_au":86.74,"recuperacion_ag":75.08,"oz_au":640.7,"oz_ag":27787.7,"oz_eq_au":879.8,"oz_eq_ag":83653.8,"m3_bombeados":37246,"ley_rica_au":0.558,"ley_rica_ag":23.43,"camiones_cum":2343,"ton_fletes_cum":42659.9},{"periodo":"2025-10","label":"octubre 2025","ton_trituracion":22020,"ton_molienda":18613.3,"ley_au":1.104,"ley_ag":81.65,"recuperacion_au":90.59,"recuperacion_ag":73.38,"oz_au":689.2,"oz_ag":39259.4,"oz_eq_au":1172.9,"oz_eq_ag":94982.2,"m3_bombeados":48242,"ley_rica_au":0.457,"ley_rica_ag":25.52,"camiones_cum":3852,"ton_fletes_cum":70295.1},{"periodo":"2025-11","label":"noviembre 2025","ton_trituracion":18360,"ton_molienda":19155.7,"ley_au":1.359,"ley_ag":60.87,"recuperacion_au":90.04,"recuperacion_ag":70.63,"oz_au":710.7,"oz_ag":27700.8,"oz_eq_au":1057.2,"oz_eq_ag":86153.1,"m3_bombeados":38108,"ley_rica_au":0.602,"ley_rica_ag":23.24,"camiones_cum":5316,"ton_fletes_cum":96627.6},{"periodo":"2025-12","label":"diciembre 2025","ton_trituracion":22854.7,"ton_molienda":19231.5,"ley_au":1.438,"ley_ag":79.75,"recuperacion_au":89.71,"recuperacion_ag":70.86,"oz_au":899.3,"oz_ag":42339.1,"oz_eq_au":1546.8,"oz_eq_ag":106010.8,"m3_bombeados":40259,"ley_rica_au":0.705,"ley_rica_ag":33.13,"camiones_cum":6677,"ton_fletes_cum":121331.6},{"periodo":"2026-01","label":"enero 2026","ton_trituracion":18899,"ton_molienda":21805.1,"ley_au":1.268,"ley_ag":114.75,"recuperacion_au":94.52,"recuperacion_ag":74.03,"oz_au":858,"oz_ag":58478.3,"oz_eq_au":1984.1,"oz_eq_ag":107866.5,"m3_bombeados":48272,"ley_rica_au":0.561,"ley_rica_ag":37.94,"camiones_cum":8100,"ton_fletes_cum":149502},{"periodo":"2026-02","label":"febrero 2026","ton_trituracion":20963.6,"ton_molienda":22034.4,"ley_au":1.57,"ley_ag":79.86,"recuperacion_au":95.93,"recuperacion_ag":71.81,"oz_au":1080.6,"oz_ag":44542.7,"oz_eq_au":1813.2,"oz_eq_ag":111690.5,"m3_bombeados":52743,"ley_rica_au":0.65,"ley_rica_ag":26.64,"camiones_cum":9543,"ton_fletes_cum":175795.6},{"periodo":"2026-03","label":"marzo 2026","ton_trituracion":32948.3,"ton_molienda":28791.3,"ley_au":1.421,"ley_ag":84.97,"recuperacion_au":94.65,"recuperacion_ag":69.83,"oz_au":1272.7,"oz_ag":53461.5,"oz_eq_au":2131.8,"oz_eq_ag":132661.9,"m3_bombeados":64937,"ley_rica_au":0.621,"ley_rica_ag":25.95,"camiones_cum":11126,"ton_fletes_cum":204533.6},{"periodo":"2026-04","label":"abril 2026","ton_trituracion":30845.9,"ton_molienda":30651.7,"ley_au":1.566,"ley_ag":64.15,"recuperacion_au":93.26,"recuperacion_ag":70,"oz_au":1527.3,"oz_ag":45965.3,"oz_eq_au":2265.6,"oz_eq_ag":143344.7,"m3_bombeados":70714,"ley_rica_au":0.689,"ley_rica_ag":20.47,"camiones_cum":12278,"ton_fletes_cum":233807},{"periodo":"2026-05","label":"mayo 2026","ton_trituracion":35422.2,"ton_molienda":31772.7,"ley_au":1.586,"ley_ag":62.62,"recuperacion_au":94.2,"recuperacion_ag":71.97,"oz_au":1654.5,"oz_ag":46212.4,"oz_eq_au":2436,"oz_eq_ag":144045.7,"m3_bombeados":72910,"ley_rica_au":0.724,"ley_rica_ag":19.98,"camiones_cum":13963,"ton_fletes_cum":264613.7},{"periodo":"2026-06","label":"junio 2026","ton_trituracion":27433.6,"ton_molienda":32811.5,"ley_au":1.526,"ley_ag":70.39,"recuperacion_au":94.62,"recuperacion_ag":73.84,"oz_au":1652.7,"oz_ag":58898.5,"oz_eq_au":2573.2,"oz_eq_ag":161689.7,"m3_bombeados":80526,"ley_rica_au":0.65,"ley_rica_ag":22.97,"camiones_cum":15545,"ton_fletes_cum":292876.9},{"periodo":"2026-07","label":"julio 2026","ton_trituracion":31393.1,"ton_molienda":30166.6,"ley_au":1.428,"ley_ag":66.22,"recuperacion_au":93.84,"recuperacion_ag":74.34,"oz_au":1373,"oz_ag":50361.3,"oz_eq_au":2096.9,"oz_eq_ag":145878.9,"m3_bombeados":83838,"ley_rica_au":0.519,"ley_rica_ag":18.89,"camiones_cum":16763,"ton_fletes_cum":314428.6}];
+const EMBARQUES_BASE = [{"nombre":"EMBARQUE 01","fecha":"2025-07-28","periodo":"2025-07","peso_seco_kg":968.1,"au_oz":285.58,"ag_oz":8370.03,"au_eq_oz":382.79,"ag_eq_oz":32959.41},{"nombre":"EMBARQUE 02","fecha":"2025-08-11","periodo":"2025-08","peso_seco_kg":494,"au_oz":303.34,"ag_oz":9081.82,"au_eq_oz":406.17,"ag_eq_oz":35874.44},{"nombre":"EMBARQUE 03","fecha":"2025-08-25","periodo":"2025-08","peso_seco_kg":535.4,"au_oz":267.09,"ag_oz":11595.96,"au_eq_oz":398.65,"ag_eq_oz":35138.15},{"nombre":"EMBARQUE 04","fecha":"2025-09-19","periodo":"2025-09","peso_seco_kg":817.5,"au_oz":430.41,"ag_oz":19854.1,"au_eq_oz":655.83,"ag_eq_oz":57761.62},{"nombre":"EMBARQUE 05","fecha":"2025-10-13","periodo":"2025-10","peso_seco_kg":1088.5,"au_oz":596.62,"ag_oz":27849.18,"au_eq_oz":941.57,"ag_eq_oz":76015.63},{"nombre":"EMBARQUE 06","fecha":"2025-11-03","periodo":"2025-11","peso_seco_kg":1236.6,"au_oz":459.28,"ag_oz":26742.28,"au_eq_oz":784.75,"ag_eq_oz":64479.4},{"nombre":"EMBARQUE 07","fecha":"2025-11-14","periodo":"2025-11","peso_seco_kg":813.4,"au_oz":200.21,"ag_oz":8241.09,"au_eq_oz":302.35,"ag_eq_oz":24394.83},{"nombre":"EMBARQUE 08","fecha":"2025-11-23","periodo":"2025-11","peso_seco_kg":798.1,"au_oz":278.97,"ag_oz":9220.31,"au_eq_oz":406.18,"ag_eq_oz":29441.21},{"nombre":"EMBARQUE 09","fecha":"2025-12-04","periodo":"2025-12","peso_seco_kg":1621.4,"au_oz":347.51,"ag_oz":11009.69,"au_eq_oz":499.4,"ag_eq_oz":36198.29},{"nombre":"EMBARQUE 10","fecha":"2025-12-17","periodo":"2025-12","peso_seco_kg":843.6,"au_oz":451.24,"ag_oz":15269.61,"au_eq_oz":672.07,"ag_eq_oz":46472.02},{"nombre":"EMBARQUE 11","fecha":"2026-01-03","periodo":"2026-01","peso_seco_kg":1144,"au_oz":489.2,"ag_oz":21360.98,"au_eq_oz":833.96,"ag_eq_oz":51671.15},{"nombre":"EMBARQUE 12","fecha":"2026-01-21","periodo":"2026-01","peso_seco_kg":1378.3,"au_oz":514.44,"ag_oz":31087.82,"au_eq_oz":1081.99,"ag_eq_oz":59266.12},{"nombre":"EMBARQUE 13","fecha":"2026-02-04","periodo":"2026-02","peso_seco_kg":1415.7,"au_oz":377,"ag_oz":31098.72,"au_eq_oz":944.76,"ag_eq_oz":51749.09},{"nombre":"EMBARQUE 14","fecha":"2026-02-22","periodo":"2026-02","peso_seco_kg":1186.4,"au_oz":715.9,"ag_oz":22281.24,"au_eq_oz":1082.31,"ag_eq_oz":65815.03},{"nombre":"EMBARQUE 15","fecha":"2026-03-10","periodo":"2026-03","peso_seco_kg":1366.1,"au_oz":609.5,"ag_oz":31369.63,"au_eq_oz":1131.75,"ag_eq_oz":67980.21},{"nombre":"EMBARQUE 16","fecha":"2026-03-29","periodo":"2026-03","peso_seco_kg":1496.5,"au_oz":795.84,"ag_oz":31443.24,"au_eq_oz":1305.02,"ag_eq_oz":80588.06},{"nombre":"EMBARQUE 17","fecha":"2026-04-18","periodo":"2026-04","peso_seco_kg":1278.3,"au_oz":1001.82,"ag_oz":32292.91,"au_eq_oz":1524.76,"ag_eq_oz":94157.52},{"nombre":"EMBARQUE 18","fecha":"2026-05-06","periodo":"2026-05","peso_seco_kg":983.6,"au_oz":961.89,"ag_oz":24054.48,"au_eq_oz":1347.4,"ag_eq_oz":84072.97},{"nombre":"EMBARQUE 19","fecha":"2026-05-27","periodo":"2026-05","peso_seco_kg":1310.2,"au_oz":1081.75,"ag_oz":31084.83,"au_eq_oz":1615.27,"ag_eq_oz":94111.33},{"nombre":"EMBARQUE 20","fecha":"2026-06-14","periodo":"2026-06","peso_seco_kg":1482.6,"au_oz":1148.23,"ag_oz":34511.33,"au_eq_oz":1740.56,"ag_eq_oz":101411.18},{"nombre":"EMBARQUE 21","fecha":"2026-07-09","periodo":"2026-07","peso_seco_kg":1839.6,"au_oz":1213.58,"ag_oz":41542.21,"au_eq_oz":1810.71,"ag_eq_oz":125970.34},{"nombre":"EMBARQUE 22","fecha":"2026-07-26","periodo":"2026-07","peso_seco_kg":1117.4,"au_oz":723.61,"ag_oz":25322.92,"au_eq_oz":1087.6,"ag_eq_oz":75663.89},{"nombre":"EMBARQUE 23","fecha":"pendiente","periodo":"2026-07","peso_seco_kg":523.7,"au_oz":325.72,"ag_oz":11721.55,"au_eq_oz":494.21,"ag_eq_oz":34381.76}];
+const PTTO_REAL = [{"periodo":"2025-07","mes_label":"Julio","ptto_ton":16300,"ptto_ley_au":1.62,"ptto_ley_ag":63.47,"ptto_oz_au":722,"ptto_oz_ag":27236,"ptto_oz_eq_au":1029,"real_ton":13890,"real_ley_au":1.66,"real_ley_ag":51.07,"real_oz_au":421,"real_oz_ag":12273,"real_oz_eq_au":562,"cump_ton":0.8521472392638036,"cump_ley_au":1.0246913580246912,"cump_ley_ag":0.8046321096581062,"cump_oz_au":0.5831024930747922,"cump_oz_ag":0.45061683066529595,"cump_oz_eq_au":0.5461613216715258},{"periodo":"2025-08","mes_label":"Agosto","ptto_ton":16668,"ptto_ley_au":1.37,"ptto_ley_ag":88.03,"ptto_oz_au":650,"ptto_oz_ag":37616,"ptto_oz_eq_au":1074,"real_ton":14282,"real_ley_au":1.43,"real_ley_ag":70.56,"real_oz_au":549,"real_oz_ag":22232,"real_oz_eq_au":803,"cump_ton":0.8568514518838493,"cump_ley_au":1.0437956204379562,"cump_ley_ag":0.8015449278655005,"cump_oz_au":0.8446153846153847,"cump_oz_ag":0.5910250957039558,"cump_oz_eq_au":0.7476722532588455},{"periodo":"2025-09","mes_label":"Septiembre","ptto_ton":14500,"ptto_ley_au":1.23,"ptto_ley_ag":114.09,"ptto_oz_au":531,"ptto_oz_ag":41620,"ptto_oz_eq_au":999,"real_ton":15711,"real_ley_au":1.3759426733463545,"real_ley_ag":63.35927599317669,"real_oz_au":587.3159683887955,"real_oz_ag":25564.435061200948,"real_oz_eq_au":889.1114201880157,"cump_ton":1.0835172413793104,"cump_ley_au":1.1186525799563858,"cump_ley_ag":0.5553446927265903,"cump_oz_au":1.1060564376436826,"cump_oz_ag":0.6142343839788791,"cump_oz_eq_au":0.8900014216096254},{"periodo":"2025-10","mes_label":"Octubre","ptto_ton":15000,"ptto_ley_au":1.43,"ptto_ley_ag":80.91,"ptto_oz_au":622,"ptto_oz_ag":30276,"ptto_oz_eq_au":968,"real_ton":18613,"real_ley_au":1.0715186210008132,"real_ley_ag":81.960434792458,"real_oz_au":735.6651092742674,"real_oz_ag":40796.396412684946,"real_oz_eq_au":1235.7829244607058,"cump_ton":1.2408666666666666,"cump_ley_au":0.7493137209795897,"cump_ley_ag":1.0129827560555926,"cump_oz_au":1.182741333238372,"cump_oz_ag":1.3474830364871497,"cump_oz_eq_au":1.2766352525420515},{"periodo":"2025-11","mes_label":"Noviembre","ptto_ton":16000,"ptto_ley_au":1.56,"ptto_ley_ag":76.49,"ptto_oz_au":726,"ptto_oz_ag":29863,"ptto_oz_eq_au":1068,"real_ton":19156,"real_ley_au":1.461241373413,"real_ley_ag":61.69664566130291,"real_oz_au":722.9649434567406,"real_oz_ag":25925.883444597708,"real_oz_eq_au":1064.8214604427849,"cump_ton":1.19725,"cump_ley_au":0.9366931880852565,"cump_ley_ag":0.8065975377343825,"cump_oz_au":0.9958194813453727,"cump_oz_ag":0.8681607154203431,"cump_oz_eq_au":0.9970238393659034},{"periodo":"2025-12","mes_label":"Diciembre","ptto_ton":19000,"ptto_ley_au":1.28,"ptto_ley_ag":92.08,"ptto_oz_au":668,"ptto_oz_ag":42466,"ptto_oz_eq_au":1152.96,"real_ton":19231.5137555,"real_ley_au":1.6213827670426821,"real_ley_ag":81.86583084824923,"real_oz_au":1017.5091998980588,"real_oz_ag":38490.1647457632,"real_oz_eq_au":1600.9940475850074,"cump_ton":1.0121849345,"cump_ley_au":1.2667052867520954,"cump_ley_ag":0.8890728806282497,"cump_oz_au":1.5232173651168546,"cump_oz_ag":0.9063760360232468,"cump_oz_eq_au":1.3885946152381758},{"periodo":"2026-01","mes_label":"Enero","ptto_ton":20000,"ptto_ley_au":1.5,"ptto_ley_ag":75.93,"ptto_oz_au":761.3,"ptto_oz_ag":38470.8,"ptto_oz_eq_au":1234.88,"real_ton":21805.063269999995,"real_ley_au":1.3144075209779227,"real_ley_ag":118.40084347448817,"real_oz_au":887.0316944190946,"real_oz_ag":59152.74392719102,"real_oz_eq_au":2041.297387335344,"cump_ton":1.0902531634999997,"cump_ley_au":0.8762716806519485,"cump_ley_ag":1.5593420713089445,"cump_oz_au":1.1651539398648294,"cump_oz_ag":1.5376010877650326,"cump_oz_eq_au":1.6530329969999868},{"periodo":"2026-02","mes_label":"Febrero","ptto_ton":22000,"ptto_ley_au":1.4726731722828776,"ptto_ley_ag":58.305640678246846,"ptto_oz_au":902.5082861545521,"ptto_oz_ag":28259.71822762138,"ptto_oz_eq_au":1467.7026507069797,"real_ton":22034.394179999996,"real_ley_au":1.5896731349917093,"real_ley_ag":80.10711021756279,"real_oz_au":1083.030452871154,"real_oz_ag":42120.84991776056,"real_oz_eq_au":1775.6984465491405,"cump_ton":1.0015633718181816,"cump_ley_au":1.079447337610872,"cump_ley_ag":1.3739169878884432,"cump_oz_au":1.2000227249832562,"cump_oz_ag":1.4904907960685592,"cump_oz_eq_au":1.2098489061757856},{"periodo":"2026-03","mes_label":"Marzo","ptto_ton":29000,"ptto_ley_au":1.4578620689655173,"ptto_ley_ag":69.04696551724139,"ptto_oz_au":1223.342407911186,"ptto_oz_ag":49570.626434399586,"ptto_oz_eq_au":2019.8432334591184,"real_ton":28791.330800000003,"real_ley_au":1.4428021579298413,"real_ley_ag":82.78296507209285,"real_oz_au":1265.2212477081273,"real_oz_ag":53509.04432943666,"real_oz_eq_au":2125.061753031967,"cump_ton":0.9928045103448278,"cump_ley_au":0.9896698656503476,"cump_ley_ag":1.1989370488906064,"cump_oz_au":1.0342331300918832,"cump_oz_ag":1.0794506379750732,"cump_oz_eq_au":1.0520924187728444},{"periodo":"2026-04","mes_label":"Abril","ptto_ton":30000,"ptto_ley_au":1.436,"ptto_ley_ag":59.793333333333344,"ptto_oz_au":1378.0066411299015,"ptto_oz_ag":43254.00940030051,"ptto_oz_eq_au":2003.8816820783868,"real_ton":30651.741347820724,"real_ley_au":1.6757474905609524,"real_ley_ag":66.41984886625724,"real_oz_au":1548.4197372775066,"real_oz_ag":46487.132457469124,"real_oz_eq_au":2293.44618762977,"cump_ton":1.0217247115940242,"cump_ley_au":1.1669550769923067,"cump_ley_ag":1.1108236514593137,"cump_oz_au":1.1236663823389663,"cump_oz_ag":1.074747361042238,"cump_oz_eq_au":1.144501797756369},{"periodo":"2026-05","mes_label":"Mayo","ptto_ton":30000,"ptto_ley_au":1.5118446247336164,"ptto_ley_ag":53.94390450203012,"ptto_oz_au":1378.0066411299015,"ptto_oz_ag":39022.580316976084,"ptto_oz_eq_au":2005.0214616630733,"real_ton":31772.65403368213,"real_ley_au":1.7380420574829922,"real_ley_ag":60.68848801479934,"real_oz_au":1684.507303875386,"real_oz_ag":44105.917017371656,"real_oz_eq_au":2430.400247177553,"cump_ton":1.0590884677894044,"cump_ley_au":1.149616851526149,"cump_ley_ag":1.1250295760944666,"cump_oz_au":1.2224232116139646,"cump_oz_ag":1.130266544628884,"cump_oz_eq_au":1.2121567243283509},{"periodo":"2026-06","mes_label":"Junio","ptto_ton":30000,"ptto_ley_au":1.5715668469558388,"ptto_ley_ag":56.70584894647457,"ptto_oz_au":1432.4418770654456,"ptto_oz_ag":41020.548389722906,"ptto_oz_eq_au":2091.5600485915134,"real_ton":32811.54889624733,"real_ley_au":1.6644012996106343,"real_ley_ag":72.20400059647716,"real_oz_au":1668.5928554427217,"real_oz_ag":56999.24294306782,"real_oz_eq_au":2559.7391316370886,"cump_ton":1.0937182965415777,"cump_ley_au":1.0590712719822373,"cump_ley_ag":1.273307814589488,"cump_oz_au":1.1648590299950345,"cump_oz_ag":1.38952903314545,"cump_oz_eq_au":1.223842047165155},{"periodo":"2026-07","mes_label":"Julio","ptto_ton":34000,"ptto_ley_au":1.5,"ptto_ley_ag":54.38,"ptto_oz_au":1536,"ptto_oz_ag":44077.3,"ptto_oz_eq_au":2194.23,"real_ton":30166.64882174331,"real_ley_au":1.5407060658596226,"real_ley_ag":67.03529242076576,"real_oz_au":1409.1039884057468,"real_oz_ag":48698.040332282115,"real_oz_eq_au":2109.0966968137454,"cump_ton":0.8872543771100974,"cump_ley_au":1.0271373772397483,"cump_ley_ag":1.2327196105326546,"cump_oz_au":0.9173854091183248,"cump_oz_ag":1.1048326538214026,"cump_oz_eq_au":0.9612012855597387}];
+const FLETES_FABRICA_BASE = [{"periodo":"2025-06","label":"Junio 2025","camiones_fabrica":374,"ton_fabrica":6780.83},{"periodo":"2025-07","label":"Julio 2025","camiones_fabrica":580,"ton_fabrica":10076.03},{"periodo":"2025-08","label":"Agosto 2025","camiones_fabrica":692,"ton_fabrica":12071.6},{"periodo":"2025-09","label":"Septiembre 2025","camiones_fabrica":700,"ton_fabrica":13826.83},{"periodo":"2025-10","label":"Octubre 2025","camiones_fabrica":1510,"ton_fabrica":27609.91},{"periodo":"2025-11","label":"Noviembre 2025","camiones_fabrica":1470,"ton_fabrica":26435.43},{"periodo":"2025-12","label":"Diciembre 2025","camiones_fabrica":1376,"ton_fabrica":24988.83},{"periodo":"2026-01","label":"Enero 2026","camiones_fabrica":1532,"ton_fabrica":27980.85},{"periodo":"2026-02","label":"Febrero 2026","camiones_fabrica":1455,"ton_fabrica":26504.06},{"periodo":"2026-03","label":"Marzo 2026","camiones_fabrica":1596,"ton_fabrica":28957.07},{"periodo":"2026-04","label":"Abril 2026","camiones_fabrica":1691,"ton_fabrica":30342.48},{"periodo":"2026-05","label":"Mayo 2026","camiones_fabrica":2128,"ton_fabrica":39158.18},{"periodo":"2026-06","label":"Junio 2026","camiones_fabrica":2289,"ton_fabrica":41207.74},{"periodo":"2026-07","label":"Julio 2026","camiones_fabrica":1425,"ton_fabrica":25477.92}];
 const COLORS = ['#5B9BD5','#ED7D31','#9a9a9a','#4EA72E','#B8912A','#A02B93','#156082','#E8A33D','#70AD47','#264478','#843C0C','#636363','#FFC000'];
 const MESES_ES = {1:'ene',2:'feb',3:'mar',4:'abr',5:'may',6:'jun',7:'jul',8:'ago',9:'sep',10:'oct',11:'nov',12:'dic'};
 
@@ -252,12 +436,12 @@ let prodMetric = 'ton_molienda';
 
 const CHART_UI_DEFAULTS = { prod:'bar', ozeq:'bar', recup:'line', pptoreal:'line', dore:'bar', fletes:'bar' };
 let chartUI = {
-  prod: {type:'bar', avg:false, trend:false},
-  ozeq: {type:'bar', avg:false, trend:false},
-  recup: {type:'line', avg:false, trend:false},
-  pptoreal: {type:'line', avg:false, trend:false},
-  dore: {type:'bar', avg:false, trend:false},
-  fletes: {type:'bar', avg:false, trend:false},
+  prod: {type:'bar', labels:false, trend:false},
+  ozeq: {type:'bar', labels:false, trend:false},
+  recup: {type:'line', labels:false, trend:false},
+  pptoreal: {type:'line', labels:false, trend:false},
+  dore: {type:'bar', labels:false, trend:false},
+  fletes: {type:'bar', labels:false, trend:false},
 };
 
 const CHART_TYPE_OPTIONS = [{k:'bar',lbl:'Barras'},{k:'line',lbl:'Línea'},{k:'area',lbl:'Área'}];
@@ -266,33 +450,28 @@ function chartControlsHtml(prefix){
   const typeOpts = CHART_TYPE_OPTIONS.map(t=>`<option value="${t.k}" ${t.k===cfg.type?'selected':''}>${t.lbl}</option>`).join('');
   return `<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12px;">
     <select id="${prefix}TypeSelect" style="font-size:12px;padding:3px 6px;border-radius:6px;border:1px solid #ccc;">${typeOpts}</select>
-    <label style="display:flex;align-items:center;gap:4px;cursor:pointer;"><input type="checkbox" id="${prefix}AvgChk" ${cfg.avg?'checked':''}> Promedio</label>
+    <label style="display:flex;align-items:center;gap:4px;cursor:pointer;"><input type="checkbox" id="${prefix}LabelsChk" ${cfg.labels?'checked':''}> Etiquetas de datos</label>
     <label style="display:flex;align-items:center;gap:4px;cursor:pointer;"><input type="checkbox" id="${prefix}TrendChk" ${cfg.trend?'checked':''}> Tendencia</label>
     <span id="${prefix}ResetBtn" title="Restablecer filtros de esta gráfica" style="cursor:pointer;opacity:.3;font-size:13px;user-select:none;transition:.15s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.3">↺</span>
   </div>`;
 }
 function wireChartControls(prefix, onRerender, resetExtra){
   document.getElementById(prefix+'TypeSelect').onchange = (e)=>{ chartUI[prefix].type = e.target.value; onRerender(); };
-  document.getElementById(prefix+'AvgChk').onchange = (e)=>{ chartUI[prefix].avg = e.target.checked; onRerender(); };
+  document.getElementById(prefix+'LabelsChk').onchange = (e)=>{ chartUI[prefix].labels = e.target.checked; onRerender(); };
   document.getElementById(prefix+'TrendChk').onchange = (e)=>{ chartUI[prefix].trend = e.target.checked; onRerender(); };
   document.getElementById(prefix+'ResetBtn').onclick = ()=>{
-    chartUI[prefix] = {type: CHART_UI_DEFAULTS[prefix], avg:false, trend:false};
+    chartUI[prefix] = {type: CHART_UI_DEFAULTS[prefix], labels:false, trend:false};
     if(resetExtra) resetExtra();
     onRerender();
   };
 }
-function withAvgTrend(baseDatasets, cfg){
+function withTrend(baseDatasets, cfg){
   const extra = [];
   baseDatasets.forEach(bd=>{
     const col = bd.borderColor || bd.backgroundColor;
-    if(cfg.avg){
-      const nums = bd.data.filter(v=>typeof v==='number');
-      const avg = nums.length? nums.reduce((a,b)=>a+b,0)/nums.length : null;
-      extra.push({type:'line', label:'Prom. '+bd.label, data: bd.data.map(()=>avg), borderColor: col, borderDash:[6,4], borderWidth:2, pointRadius:0, fill:false, tension:0, yAxisID: bd.yAxisID, order:1});
-    }
     if(cfg.trend){
       const trend = linearRegressionLine(bd.data);
-      extra.push({type:'line', label:'Tend. '+bd.label, data: trend, borderColor: col, borderDash:[2,2], borderWidth:1.5, pointRadius:0, fill:false, tension:0, yAxisID: bd.yAxisID, order:2});
+      extra.push({type:'line', label:'Tend. '+bd.label, data: trend, borderColor: col, borderDash:[2,2], borderWidth:1.5, pointRadius:0, fill:false, tension:0, yAxisID: bd.yAxisID, order:2, datalabels:{display:false}});
     }
   });
   return extra;
@@ -311,6 +490,17 @@ function linearRegressionLine(vals){
   return vals.map((v,i)=> slope*i+intercept);
 }
 
+if (typeof Chart !== 'undefined' && typeof ChartDataLabels !== 'undefined') { Chart.register(ChartDataLabels); }
+function dlOpts(cfg){
+  return {
+    display: !!cfg.labels,
+    anchor:'end', align:'top', offset:3, clip:false,
+    font:{size:9}, color:'#444',
+    backgroundColor:'rgba(255,255,255,.78)', borderRadius:3,
+    padding:{top:1,bottom:1,left:3,right:3},
+    formatter:v=>(v===null||v===undefined||isNaN(v))?'':(typeof v==='number'?Math.round(v*100)/100:v)
+  };
+}
 let state = { months: [], embarques: [], hidden: [], pptoReal: [], fletesFabrica: [] };
 
 function loadState(){
@@ -502,12 +692,12 @@ function renderResumen(){
       {type:ctype, label:'Oz Eq Au', data:vm.map(m=>m.oz_eq_au), backgroundColor: ctype==='bar'?'#B8912A':'rgba(184,145,42,.18)', borderColor: ctype==='line'?'#B8912A':undefined, fill:isArea, tension: ctype==='line'?.25:undefined, order:3},
       {type:ctype, label:'Oz Eq Ag (÷100)', data:vm.map(m=>m.oz_eq_ag/100), backgroundColor: ctype==='bar'?'#5B9BD5':'rgba(91,155,213,.18)', borderColor: ctype==='line'?'#5B9BD5':undefined, fill:isArea, tension: ctype==='line'?.25:undefined, order:3},
     ];
-    const datasets = baseDatasets.concat(withAvgTrend(baseDatasets, cfg));
+    const datasets = baseDatasets.concat(withTrend(baseDatasets, cfg));
     destroyChart('chOzEq');
     charts['chOzEq'] = new Chart(document.getElementById('chOzEq'), {
       type: ctype==='bar'?'bar':'line',
       data:{ labels: vm.map(m=>m.label), datasets },
-      options:{responsive:true, scales:{y:{beginAtZero:true}}}
+      options:{responsive:true, plugins:{datalabels: dlOpts(cfg)}, scales:{y:{beginAtZero:true}}}
     });
   }
 
@@ -518,12 +708,12 @@ function renderResumen(){
       {type:ctype, label:'Recuperación Au %', data:vm.map(m=>m.recuperacion_au), borderColor:'#B8912A', backgroundColor: ctype==='bar'?'#B8912A':'rgba(184,145,42,.18)', fill:isArea, tension: ctype==='line'?.25:undefined, order:3},
       {type:ctype, label:'Recuperación Ag %', data:vm.map(m=>m.recuperacion_ag), borderColor:'#5B9BD5', backgroundColor: ctype==='bar'?'#5B9BD5':'rgba(91,155,213,.18)', fill:isArea, tension: ctype==='line'?.25:undefined, order:3},
     ];
-    const datasets = baseDatasets.concat(withAvgTrend(baseDatasets, cfg));
+    const datasets = baseDatasets.concat(withTrend(baseDatasets, cfg));
     destroyChart('chRecup');
     charts['chRecup'] = new Chart(document.getElementById('chRecup'), {
       type: ctype==='bar'?'bar':'line',
       data:{ labels: vm.map(m=>m.label), datasets },
-      options:{responsive:true, scales:{y:{min:50,max:100}}}
+      options:{responsive:true, plugins:{datalabels: dlOpts(cfg)}, scales:{y:{min:50,max:100}}}
     });
   }
 
@@ -602,12 +792,13 @@ function renderPptoReal(){
       {type:ctype, label:'Tonelaje Real', data: rows.map(r=>r.real_ton), borderColor:'#9a9a9a', backgroundColor: ctype==='bar'?'#9a9a9a':'rgba(154,154,154,.18)', yAxisID:'y', fill:isArea, tension: ctype==='line'?.3:undefined, order:3},
       {type:ctype, label:'Oz Au Eq', data: rows.map(r=>r.real_oz_eq_au), borderColor:'#B8912A', backgroundColor: ctype==='bar'?'#B8912A':'rgba(184,145,42,.18)', yAxisID:'y1', fill:isArea, tension: ctype==='line'?.3:undefined, order:3},
     ];
-    const datasets = baseDatasets.concat(withAvgTrend(baseDatasets, cfg));
+    const datasets = baseDatasets.concat(withTrend(baseDatasets, cfg));
     destroyChart('chPptoReal');
     charts['chPptoReal'] = new Chart(document.getElementById('chPptoReal'), {
       type: ctype==='bar'?'bar':'line',
       data:{ labels: rows.map(r=>r.mes_label.slice(0,3)+'-'+String(r.periodo.slice(2,4))), datasets },
       options:{ responsive:true,
+        plugins:{datalabels: dlOpts(cfg)},
         scales:{
           y:{ type:'linear', position:'left', title:{display:true,text:'Tonelaje'} },
           y1:{ type:'linear', position:'right', title:{display:true,text:'Oz Au Eq'}, grid:{drawOnChartArea:false} }
@@ -664,12 +855,12 @@ function renderProduccion(){
     pointBackgroundColor: chartType==='line' ? vm.map(m=>colorForPeriodo(m.periodo)) : undefined,
     order: 3,
   }];
-  const datasets = baseDatasets.concat(withAvgTrend(baseDatasets, cfg));
+  const datasets = baseDatasets.concat(withTrend(baseDatasets, cfg));
   destroyChart('chTon');
   charts['chTon'] = new Chart(document.getElementById('chTon'), {
     type: chartType==='bar' ? 'bar' : 'line',
     data:{labels:vm.map(m=>m.label), datasets},
-    options:{responsive:true, plugins:{legend:{display: cfg.avg||cfg.trend}}, scales:{y:{title:{display:true,text:metric.label}}}}
+    options:{responsive:true, plugins:{legend:{display: cfg.trend}, datalabels: dlOpts(cfg)}, scales:{y:{title:{display:true,text:metric.label}}}}
   });
 }
 
@@ -708,12 +899,12 @@ function renderDore(){
       {type:ctype, label:'Au Eq (ozt)', data:embVisible.map(e=>e.au_eq_oz), backgroundColor: ctype==='bar'?'#B8912A':'rgba(184,145,42,.18)', borderColor: ctype==='line'?'#B8912A':undefined, fill:isArea, tension: ctype==='line'?.25:undefined, order:3},
       {type:ctype, label:'Ag Eq (ozt) ÷100', data:embVisible.map(e=>e.ag_eq_oz/100), backgroundColor: ctype==='bar'?'#5B9BD5':'rgba(91,155,213,.18)', borderColor: ctype==='line'?'#5B9BD5':undefined, fill:isArea, tension: ctype==='line'?.25:undefined, order:3},
     ];
-    const datasets = baseDatasets.concat(withAvgTrend(baseDatasets, cfg));
+    const datasets = baseDatasets.concat(withTrend(baseDatasets, cfg));
     destroyChart('chDore');
     charts['chDore'] = new Chart(document.getElementById('chDore'), {
       type: ctype==='bar'?'bar':'line',
       data:{labels, datasets},
-      options:{responsive:true}
+      options:{responsive:true, plugins:{datalabels: dlOpts(cfg)}}
     });
   }
 }
@@ -750,12 +941,12 @@ function renderFletes(){
         borderColor: ctype==='line'?'#B8912A':undefined, fill:isArea, tension: ctype==='line'?.3:undefined,
         pointBackgroundColor: ctype==='line'? vm.map(m=>colorForPeriodo(m.periodo)) : undefined, order:3},
     ];
-    const datasets = baseDatasets.concat(withAvgTrend(baseDatasets, cfg));
+    const datasets = baseDatasets.concat(withTrend(baseDatasets, cfg));
     destroyChart('chFletes');
     charts['chFletes'] = new Chart(document.getElementById('chFletes'), {
       type: ctype==='bar'?'bar':'line',
       data:{labels:vm.map(m=>m.label), datasets},
-      options:{responsive:true, plugins:{legend:{display: cfg.avg||cfg.trend}}}
+      options:{responsive:true, plugins:{legend:{display: cfg.trend}, datalabels: dlOpts(cfg)}}
     });
   }
 }
@@ -1027,8 +1218,18 @@ function parseWorkbook(wb){
 
 const MESES_FULL = {1:'enero',2:'febrero',3:'marzo',4:'abril',5:'mayo',6:'junio',7:'julio',8:'agosto',9:'septiembre',10:'octubre',11:'noviembre',12:'diciembre'};
 
+// Candado simple: pide la contraseña cada vez que se intenta cargar un archivo nuevo.
+// No es seguridad real (el código es público), es solo un filtro para evitar cargas accidentales o no autorizadas.
+function checkUploadPin(){
+  const pin = prompt('Contraseña para actualizar datos:');
+  if(pin === null) return false; // canceló
+  if(pin !== 'cesarG83'){ alert('Contraseña incorrecta.'); return false; }
+  return true;
+}
+
 function handleFile(file){
   if(IS_LOCKED_COPY) return; // copia archivada: no admite nuevos datos
+  if(!checkUploadPin()) return;
   const reader = new FileReader();
   reader.onload = function(e){
     try{
@@ -1128,6 +1329,7 @@ dz.addEventListener('drop', e=>{
 
 document.getElementById('btnReset').onclick = ()=>{
   if(IS_LOCKED_COPY) return;
+  if(!checkUploadPin()) return;
   if(!confirm('Esto borra los meses que agregaste en este navegador (los de fábrica no se tocan). ¿Continuar?')) return;
   localStorage.removeItem('mrt_months_extra');
   localStorage.removeItem('mrt_emb_extra');
@@ -1138,25 +1340,17 @@ document.getElementById('btnReset').onclick = ()=>{
 };
 
 document.getElementById('btnExport').onclick = ()=>{
-  const htmlSrc = document.documentElement.outerHTML;
-  const monthsFull = JSON.stringify(state.months);
-  const embFull = JSON.stringify(state.embarques);
-  const pptoFull = JSON.stringify(state.pptoReal);
-  const fletesFabFull = JSON.stringify(state.fletesFabrica);
-  let newHtml = htmlSrc
-    .replace(/const MONTHS_BASE = \[.*?\];/s, 'const MONTHS_BASE = '+monthsFull+';')
-    .replace(/const EMBARQUES_BASE = \[.*?\];/s, 'const EMBARQUES_BASE = '+embFull+';')
-    .replace(/const PTTO_REAL = \[.*?\];/s, 'const PTTO_REAL = '+pptoFull+';')
-    .replace(/const FLETES_FABRICA_BASE = \[.*?\];/s, 'const FLETES_FABRICA_BASE = '+fletesFabFull+';');
+  let newHtml = document.documentElement.outerHTML
+    .replace(/const MONTHS_BASE = \[.*?\];\s*\n/s, 'const MONTHS_BASE = '+JSON.stringify(state.months)+';\n')
+    .replace(/const EMBARQUES_BASE = \[.*?\];\s*\n/s, 'const EMBARQUES_BASE = '+JSON.stringify(state.embarques)+';\n')
+    .replace(/const PTTO_REAL = \[.*?\];\s*\n/s, 'const PTTO_REAL = '+JSON.stringify(state.pptoReal)+';\n')
+    .replace(/const FLETES_FABRICA_BASE = \[.*?\];\s*\n/s, 'const FLETES_FABRICA_BASE = '+JSON.stringify(state.fletesFabrica)+';\n');
   // La copia guardada queda archivada: no admite arrastrar más archivos ni restablecer.
   newHtml = newHtml.replace('const IS_LOCKED_COPY = false;', 'const IS_LOCKED_COPY = true;');
-  // strip any extra localStorage-based months since they are now embedded as base
   const blob = new Blob([newHtml], {type:'text/html'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  const periodos = state.months.map(m=>m.periodo).sort();
-  const rango = periodos.length? (periodos[0]+'_a_'+periodos[periodos.length-1]) : 'balance';
-  a.href = url; a.download = 'dashboard_balance_mrt_'+rango+'.html';
+  a.href = url; a.download = 'dashboard_balance_mrt_'+(state.months.length?state.months[state.months.length-1].periodo:'copia')+'.html';
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   URL.revokeObjectURL(url);
 };
@@ -1166,12 +1360,16 @@ function applyLockIfNeeded(){
   document.getElementById('dropzone').style.display = 'none';
   document.getElementById('btnReset').style.display = 'none';
   document.getElementById('btnExport').style.display = 'none';
-  document.getElementById('lockedBanner').style.display = 'block';
+  const banner = document.getElementById('lockedBanner');
+  banner.style.display = 'block';
 }
+
+
 
 loadState();
 applyLockIfNeeded();
 renderAll();
 </script>
-</body>
-</html>
+
+
+</body></html>
